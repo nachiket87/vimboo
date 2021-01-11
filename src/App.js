@@ -20,7 +20,6 @@ function App() {
   const [timeLeft, setTimeLeft] = useState(3);
 
   const change = (event, value) => {
-    console.log(value);
     if (value.action === "remove" && value.lines.includes("%")) {
       setScore(score + 1);
       if (score + 1 === 5) {
@@ -64,7 +63,9 @@ function App() {
           onChange={(e, v) => change(e, v)}
           height="800px"
           onLoad={itLoaded}
-          width="1200px"
+          width={
+            window.innerWidth < 400 ? window.innerWidth : window.innerWidth - 50
+          }
           keyboardHandler="vim"
           name="vimeditor"
           setOptions={{
