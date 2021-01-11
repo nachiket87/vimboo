@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const Timer = ({ timeLeft, setTimeLeft }) => {
+const Timer = ({ timeLeft, setTimeLeft, gameOver }) => {
   useEffect(() => {
     if (!timeLeft) return;
 
@@ -8,8 +8,12 @@ const Timer = ({ timeLeft, setTimeLeft }) => {
       setTimeLeft(timeLeft - 1);
     }, 1000);
 
+    if (gameOver) {
+      clearInterval(intervalId);
+    }
+
     return () => clearInterval(intervalId);
-  }, [timeLeft, setTimeLeft]);
+  }, [timeLeft, setTimeLeft, gameOver]);
 
   return (
     <div>

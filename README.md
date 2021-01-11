@@ -1,5 +1,7 @@
 ### Wanna Learn Vim?
 
+deploayed: https://vimboo.netlify.com
+
 This is a game to practice and learn vim for people that don't see the power of it.
 
 one line to give the program's name and a brief description
