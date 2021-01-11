@@ -17,7 +17,7 @@ const VALUES = [
 
 function App() {
   const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(3);
+  const [timeLeft, setTimeLeft] = useState(30);
 
   const change = (event, value) => {
     if (value.action === "remove" && value.lines.includes("%")) {
