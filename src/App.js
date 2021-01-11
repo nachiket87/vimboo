@@ -18,6 +18,7 @@ const VALUES = [
 function App() {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(30);
+  const [gameOver, setGameOver] = useState(false);
 
   const change = (event, value) => {
     if (value.action === "remove" && value.lines.includes("%")) {
@@ -28,7 +29,7 @@ function App() {
         } else {
           alert("Congratulations! You killed the % in time!");
         }
-        return;
+        setGameOver(true);
       }
     }
   };
@@ -38,7 +39,11 @@ function App() {
   };
   return (
     <div className="App">
-      <Timer timeLeft={timeLeft} setTimeLeft={setTimeLeft} />
+      <Timer
+        timeLeft={timeLeft}
+        setTimeLeft={setTimeLeft}
+        gameOver={gameOver}
+      />
       <div>
         <p>
           A wild <b>'%'</b> is out of control! he keeps popping up everywhere on
