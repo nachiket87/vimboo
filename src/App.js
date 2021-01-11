@@ -7,24 +7,29 @@ import "ace-builds/src-noconflict/keybinding-vim";
 import { useState } from "react";
 
 const VALUES = [
-  `\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\tnachiket\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
-  `\n\n\nnachiket\n\n\n\n\n\n\n\n\n\n\n`,
-  `\nnachiket\n\n\n\n\n\n\n\n\n`,
-  `\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t\t\tnachiket\n\n\n\n\n\n\n\n\n`,
-  `\n\n\n\nprint("nachiket")\n\n\n\n\n\n\n\n\n`,
+  `\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t%\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
+  `\n\n\n%\n\n\n\n\n\n\n\n\n\n\n`,
+  `\n%\n\n\n\n\n\n\n\n\n`,
+  `\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t\t\t%\n\n\n\n\n\n\n\n\n`,
+  `\n\n\n\nprint("%")\n\n\n\n\n\n\n\n\n`,
+  `\n\n\n\n\t\t\t\t\t\t\t\t\tCongratulations!\n\n\n\n`,
 ];
 
 function App() {
   const [score, setScore] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(3);
 
   const change = (event, value) => {
-    if (value.action === "remove") {
-      if (value.lines.includes("nachiket")) {
-        setScore(score + 1);
-        if (score + 1 === 5) {
+    console.log(value);
+    if (value.action === "remove" && value.lines.includes("%")) {
+      setScore(score + 1);
+      if (score + 1 === 5) {
+        if (timeLeft < 0) {
           alert("Game Over");
-          return;
+        } else {
+          alert("Game Over! You didn't finish in time but you finished!");
         }
+        return;
       }
     }
   };
@@ -34,11 +39,11 @@ function App() {
   };
   return (
     <div className="App">
-      <Timer />
+      <Timer timeLeft={timeLeft} setTimeLeft={setTimeLeft} />
       <div>
         <p>
-          Nachiket is out of control! he keeps popping up everywhere on this
-          editor, remove him as fast as you can
+          A wild <b>'%'</b> is out of control! he keeps popping up everywhere on
+          this editor, remove him as fast as you can
         </p>
         <p>
           <b> Tip: </b>there are several ways to navigate and delete a word with
@@ -46,17 +51,16 @@ function App() {
           <b>'h'</b> to move left, <b>'j'</b> to move down, <b>'k'</b> to move
           up,<b>'l'</b> to move right
         </p>
-        <p>
-          Once you're on the first letter on the word type <b>'d' + 'w'</b>.
-          This means 'delete word'{" "}
-        </p>
+        <h3>
+          Once you've spotted the wild % put your cursor on it to aim your lazer
+          and shoot by pressing <b>'x'</b>
+        </h3>
       </div>
       <div style={{ display: "grid", placeItems: "center" }}>
         <AceEditor
           theme="gruvbox"
           minLines={25}
           value={VALUES[score]}
-          debounceChangePeriod={1000}
           onChange={(e, v) => change(e, v)}
           height="800px"
           onLoad={itLoaded}

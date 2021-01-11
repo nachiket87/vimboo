@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const Timer = () => {
-  const [timeLeft, setTimeLeft] = useState(30);
-
+const Timer = ({ timeLeft, setTimeLeft }) => {
   useEffect(() => {
     if (!timeLeft) return;
 
@@ -11,7 +9,7 @@ const Timer = () => {
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [timeLeft]);
+  }, [timeLeft, setTimeLeft]);
 
   return (
     <div>
