@@ -23,10 +23,10 @@ function App() {
     if (value.action === "remove" && value.lines.includes("%")) {
       setScore(score + 1);
       if (score + 1 === 5) {
-        if (timeLeft < 0) {
-          alert("Game Over");
-        } else {
+        if (timeLeft <= 0) {
           alert("Game Over! You didn't finish in time but you finished!");
+        } else {
+          alert("Congratulations! You killed the % in time!");
         }
         return;
       }
