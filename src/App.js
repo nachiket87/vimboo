@@ -88,6 +88,29 @@ function App() {
     }
   };
 
+  const startTime = () => {
+    setTimer(true);
+    editor.current.editor.textInput.focus();
+  };
+  const insertMode = () => {
+    console.log(
+      editor.current.editor.container.className.includes("normal-mode")
+    );
+    if (editor.current.editor.container.className.includes("normal-mode")) {
+      editor.current.editor.container.className.includes("normal-mode");
+      editor.current.editor.container.className = editor.current.editor.container.className.replace(
+        "normal-mode",
+        ""
+      );
+    } else {
+      editor.current.editor.container.className =
+        editor.current.editor.container.className + " normal-mode";
+    }
+    editor.current.editor.state.cm.state.vim.insertMode = !editor.current.editor
+      .state.cm.state.vim.insertMode;
+    editor.current.editor.textInput.focus();
+  };
+
   return (
     <div className="App">
       <div>{INSTRUCTIONS[currentLevel]}</div>
@@ -102,12 +125,9 @@ function App() {
           <></>
         )}
         <button onClick={() => reset()}> Reset </button>
-        <button onClick={() => nextLesson()} display={gameOver}>
-          Next Lesson
-        </button>
-        <button onClick={() => setTimer(true)} display={gameOver}>
-          Start Timer
-        </button>
+        <button onClick={() => nextLesson()}>Next Lesson</button>
+        <button onClick={() => startTime()}>Start Timer</button>
+        <button onClick={() => insertMode()}>ESC</button>
         <AceEditor
           theme="gruvbox"
           minLines={25}
