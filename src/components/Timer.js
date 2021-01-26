@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 
 const Timer = ({ timeLeft, setTimeLeft, gameOver }) => {
   useEffect(() => {
@@ -21,4 +22,11 @@ const Timer = ({ timeLeft, setTimeLeft, gameOver }) => {
     </div>
   );
 };
+
+Timer.propTypes = {
+  timeLeft: PropTypes.number,
+  setTimeLeft: PropTypes.func,
+  gameOver: PropTypes.bool,
+};
+
 export default Timer;
