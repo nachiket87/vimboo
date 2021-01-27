@@ -15,6 +15,7 @@ const VALUES = data["levels"];
 function App() {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
+  const [hideInstruct, setHideInstruct] = useState(false);
   const [currentLevel, setCurrentLevel] = useState(0);
   const [size, setSize] = useState([0, 0]);
   const editor = useRef(null);
@@ -68,28 +69,47 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <div>{INSTRUCTIONS[currentLevel]}</div>
-      <div style={{ display: "grid", placeItems: "center" }}>
+    <div className="App p-3 m-3">
+      <div
+        className={`bg-gray-200 rounded-lg p-2 ${hideInstruct ? "hidden" : ""}`}
+      >
+        {INSTRUCTIONS[currentLevel]}
+      </div>
+      <button
+        className="m-2 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
+        display={`${gameOver}`}
+        onClick={() => setHideInstruct(!hideInstruct)}
+      >
+        {hideInstruct ? "Show" : "Hide"} Info
+      </button>
+      <div className="grid place-items-center">
+        <h3 className="font-black text-purple-700"> Problem Number: {score}</h3>
         <Timer gameOver={gameOver} reset={reset} />
-        <h1> Problem Number: {score}</h1>
-        <button
-          onClick={() => nextLesson()}
-          display={`${gameOver}`}
-          disabled={currentLevel === INSTRUCTIONS.length - 1}
-        >
-          Next Lesson
-        </button>
-        <button
-          onClick={() => prevLesson()}
-          display={`${gameOver}`}
-          disabled={currentLevel === 0}
-        >
-          Prev Lesson
-        </button>
-        <button onClick={insertMode} display={`${gameOver}`}>
-          ESC
-        </button>
+        <div className="flex flex-auto justify-between">
+          <button
+            className="m-2 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
+            onClick={insertMode}
+            display={`${gameOver}`}
+          >
+            ESC
+          </button>
+          <button
+            className="m-2 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
+            onClick={() => nextLesson()}
+            display={`${gameOver}`}
+            disabled={currentLevel === INSTRUCTIONS.length - 1}
+          >
+            Next Lesson
+          </button>
+          <button
+            className="m-2 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
+            onClick={() => prevLesson()}
+            display={`${gameOver}`}
+            disabled={currentLevel === 0}
+          >
+            Prev Lesson
+          </button>
+        </div>
         <AceEditor
           theme="gruvbox"
           minLines={25}

@@ -19,8 +19,13 @@ const Timer = ({ gameOver, reset }) => {
 
   return (
     <div>
-      <h1>Time Left: {timeLeft ? timeLeft : "Time up! Keep going though"}</h1>
+      <h1 className="text-4xl m-3">
+        <span className="font-black text-purple-700">
+          {timeLeft ? timeLeft : "Time up! Keep going though"}
+        </span>
+      </h1>
       <button
+        className="py-2 px-4 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
         onClick={() => {
           setTimeLeft(30);
           reset();
