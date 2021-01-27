@@ -1,10 +1,10 @@
+import React, { useLayoutEffect, useState, useRef } from "react";
 import "./App.css";
 import Timer from "./components/Timer";
 import AceEditor from "react-ace";
 
 import "ace-builds/src-noconflict/theme-gruvbox";
 import "ace-builds/src-noconflict/keybinding-vim";
-import { useLayoutEffect, useState, useRef } from "react";
 
 const INSTRUCTIONS = [
   ` A wild '%' is out of control! he keeps popping up everywhere on
@@ -92,16 +92,7 @@ function App() {
     <div className="App">
       <div>{INSTRUCTIONS[currentLevel]}</div>
       <div style={{ display: "grid", placeItems: "center" }}>
-        {startTimer ? (
-          <Timer
-            timeLeft={timeLeft}
-            setTimeLeft={setTimeLeft}
-            gameOver={gameOver}
-          />
-        ) : (
-          <></>
-        )}
-        <button onClick={() => reset()}> Reset </button>
+        <Timer gameOver={gameOver} reset={reset} />
         <button onClick={() => nextLesson()} display={gameOver}>
           Next Lesson
         </button>
