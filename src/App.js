@@ -31,6 +31,7 @@ function App() {
   const reset = () => {
     setScore(0);
     setGameOver(false);
+    setCurrentLevel(currentLevel);
     editor.current.editor.textInput.focus();
   };
   const nextLesson = () => {
@@ -46,17 +47,18 @@ function App() {
     editor.current.editor.textInput.focus();
   };
   const change = (value) => {
-    const content = editor.current.editor.session.getTextRange({
-      end: { row: 5, column: 20 },
-      start: { row: 5, column: 9 },
-    });
-    console.log(content);
-    if (levelHelpers[currentLevel](value)) {
+    if (
+      levelHelpers[currentLevel]({
+        value: value,
+        editor: editor,
+        score: score,
+      })
+    ) {
       setScore(score + 1);
       if (score + 1 === 5) {
         alert("Level Complete!");
         setGameOver(true);
-        nextLesson();
+        if (currentLevel < 3) nextLesson(); // hard coded to prevent out of bounds of levels
       }
     }
   };
@@ -70,10 +72,19 @@ function App() {
       <div>{INSTRUCTIONS[currentLevel]}</div>
       <div style={{ display: "grid", placeItems: "center" }}>
         <Timer gameOver={gameOver} reset={reset} />
-        <button onClick={() => nextLesson()} display={`${gameOver}`}>
+        <h1> Problem Number: {score}</h1>
+        <button
+          onClick={() => nextLesson()}
+          display={`${gameOver}`}
+          disabled={currentLevel === INSTRUCTIONS.length - 1}
+        >
           Next Lesson
         </button>
-        <button onClick={() => prevLesson()} display={`${gameOver}`}>
+        <button
+          onClick={() => prevLesson()}
+          display={`${gameOver}`}
+          disabled={currentLevel === 0}
+        >
           Prev Lesson
         </button>
         <button onClick={insertMode} display={`${gameOver}`}>

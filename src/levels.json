@@ -2,8 +2,8 @@
   "instructions":
     ["A wild '%' is out of control!  he keeps popping up everywhere on this editor, remove him as fast as you can Tip: there are several ways to navigate and delete a word with vim. For this challenge, we recommend you stick to the basics. Use 'h' to move left, 'j' to move down, 'k' to move up,'l' to move right Once you've spotted the wild % put your cursor on it to aim your lazer and shoot by pressing 'x' Time to get faster You can type : followed by line number to take the cursor directly to the line you want to go to You can also go to the end of each word by typing 'E'",
       "Time to get faster! You can type : followed by line number to take the cursor directly to the line you want to go to You can also go to the end of each word by typing 'E'",
-      "Let's play a Vim version of 'where's waldo!', find the word Waldo in the text below. But be careful, you cannot delete each character to win this challenge, you must delete this entire name.\n\n you can do this be bringing your cursor onto the first letter 'W' and pressing 5x",
-      "Enough with the deleting. Let's do something that's common in programming. Replacing things within brackets! This challenge you will need to replace the print statements with 'Hello World'\n this can be done by simply placing the cursor on the open bracker and pressing 'c' + 'i'"
+      "Let's play a Vim version of 'where's waldo!', find the word Waldo in the text below. But be careful, you cannot delete each character to win this challenge, you must delete this entire name.\n\n you can do this be bringing your cursor onto the first letter 'W' and pressing 5x or typing 'd' 'w'",
+      "Enough with the deleting. Let's do something that's common in programming. Replacing things within brackets or any surrounding tags for that matter! This challenge you will need to replace the print statements with 'Hello World'\n this can be done by simply placing the cursor on the open bracker and pressing 'c' + 'i' followed by \nthe surrounding tags you'd like to insert text into"
     ],
     "levels": [
       [
@@ -32,11 +32,11 @@
       ],
       [
         "#include<iostream>\n\nusing namespace std;\n\nint main() {\n  print(\"\")\n}",
-        "#include<iostream>\n\n\nusing namespace std;\n\nint main() {\n  print(\"\")\n}",
-        "#include<iostream>\n\n\n\nusing namespace std;\n\nint main() {\n  print(\"\")\n}",
-        "#include<iostream>\n\n\n\nusing namespace std;\n\nint main() {\n\n\n  print(\"\")\n}",
-        "#include<iostream>\n\n\n\nusing namespace std;\n\nint main() {\n\n\n  print(\"\")\n}",
-        "#include<iostream>\n\n\n\nusing namespace std;\n\nint main() {\n\n\n  print(\"\")\n}"
+        "import React from 'react'\n\nconst App = () =>\n{\n return <h1>{}</h1> \n}\n export default App",
+        "#include<iostream>\n\nusing namespace std;\n\nint main() {\n  print(\"\")\n}",
+        "#include<iostream>\n\nusing namespace std;\n\nint main() {\n  print(\"\")\n}",
+        "#include<iostream>\n\nusing namespace std;\n\nint main() {\n  print(\"\")\n}",
+        "#include<iostream>\n\nusing namespace std;\n\nint main() {\n  print(\"\")\n}"
       ]
     ]
 }
