@@ -1,50 +1,21 @@
+import React, { useLayoutEffect, useState, useRef } from "react";
 import "./App.css";
+import switchMode from "./utilities/switchModes";
 import Timer from "./components/Timer";
+import levelHelpers from "./utilities/levelsHelper";
+import data from "./levels.json";
 import AceEditor from "react-ace";
 
 import "ace-builds/src-noconflict/theme-gruvbox";
 import "ace-builds/src-noconflict/keybinding-vim";
-import { useLayoutEffect, useState, useRef } from "react";
 
-const INSTRUCTIONS = [
-  ` A wild '%' is out of control! he keeps popping up everywhere on
-          this editor, remove him as fast as you can
-           Tip: there are several ways to navigate and delete a word with
-          vim. For this challenge, we recommend you stick to the basics. Use
-          'h' to move left, 'j' to move down, 'k' to move
-          up,'l' to move right
-          Once you've spotted the wild % put your cursor on it to aim your lazer
-          and shoot by pressing 'x'
-  `,
-  ` Time to get faster! 
-        You can type : followed by line number to take the cursor directly to the line you want to go to
-        You can also go to the end of each word by typing 'E' `,
-];
-
-const VALUES = [
-  [
-    `\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t%\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
-    `\n\n\n%\n\n\n\n\n\n\n\n\n\n\n`,
-    `\n%\n\n\n\n\n\n\n\n\n`,
-    `\t\t\t\t\t\t%\n\n\n\n\n\n\n\n\n`,
-    `\n\n\n\nprint("%")\n\n\n\n\n\n\n\n\n`,
-    `\n\n\n\n\t\t\t\t\t\t\t\t\tCongratulations!\n\n\n\n`,
-  ],
-  [
-    `\n\n\n\n\nprint("%")\n\n\n\n\n\n\n\n\n`,
-    `\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t%\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
-    `\n%\n\n\n\n\n\n\n\n\n`,
-    `\n\n\n%\n\n\n\n\n\n\n\n\n\n\n`,
-    `\n\n\n\t\t\t\t\t\t\t\t\t%\n\n\n\n\n\n\n\n\n`,
-    `\n\n\n\nprint("%")\n\n\n\n\n\n\n\n\n`,
-  ],
-];
+const INSTRUCTIONS = data["instructions"];
+const VALUES = data["levels"];
 
 function App() {
   const [score, setScore] = useState(0);
-  const [startTimer, setTimer] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(30);
   const [gameOver, setGameOver] = useState(false);
+  const [hideInstruct, setHideInstruct] = useState(false);
   const [currentLevel, setCurrentLevel] = useState(0);
   const [size, setSize] = useState([0, 0]);
   const editor = useRef(null);
@@ -61,59 +32,90 @@ function App() {
   const reset = () => {
     setScore(0);
     setGameOver(false);
-    setTimeLeft(30);
+    setCurrentLevel(currentLevel);
     editor.current.editor.textInput.focus();
-    console.log(editor.current.editor.session);
   };
   const nextLesson = () => {
-    setTimer(false);
     setScore(0);
     setGameOver(false);
     setCurrentLevel(currentLevel + 1);
-    setTimeLeft(20);
     editor.current.editor.textInput.focus();
   };
-  const change = (event, value) => {
-    console.log(event);
-    if (value.action === "remove" && value.lines.includes("%")) {
+  const prevLesson = () => {
+    setScore(0);
+    setGameOver(false);
+    setCurrentLevel(currentLevel - 1);
+    editor.current.editor.textInput.focus();
+  };
+  const change = (value) => {
+    if (
+      levelHelpers[currentLevel]({
+        value: value,
+        editor: editor,
+        score: score,
+      })
+    ) {
       setScore(score + 1);
       if (score + 1 === 5) {
-        if (timeLeft <= 0) {
-          alert("Game Over! You didn't finish in time but you finished!");
-        } else {
-          alert("Congratulations! You killed the % in time!");
-        }
+        alert("Level Complete!");
         setGameOver(true);
+        if (currentLevel < 3) nextLesson(); // hard coded to prevent out of bounds of levels
       }
     }
   };
 
+  const insertMode = () => {
+    switchMode(editor);
+  };
+
   return (
-    <div className="App">
-      <div>{INSTRUCTIONS[currentLevel]}</div>
-      <div style={{ display: "grid", placeItems: "center" }}>
-        {startTimer ? (
-          <Timer
-            timeLeft={timeLeft}
-            setTimeLeft={setTimeLeft}
-            gameOver={gameOver}
-          />
-        ) : (
-          <></>
-        )}
-        <button onClick={() => reset()}> Reset </button>
-        <button onClick={() => nextLesson()} display={gameOver}>
-          Next Lesson
-        </button>
-        <button onClick={() => setTimer(true)} display={gameOver}>
-          Start Timer
-        </button>
+    <div className="App p-3 m-3">
+      <div
+        className={`bg-gray-200 rounded-lg p-2 ${hideInstruct ? "hidden" : ""}`}
+      >
+        {INSTRUCTIONS[currentLevel]}
+      </div>
+      <button
+        className="m-2 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
+        display={`${gameOver}`}
+        onClick={() => setHideInstruct(!hideInstruct)}
+      >
+        {hideInstruct ? "Show" : "Hide"} Info
+      </button>
+      <div className="grid place-items-center">
+        <h3 className="font-black text-purple-700"> Problem Number: {score}</h3>
+        <Timer gameOver={gameOver} reset={reset} />
+        <div className="flex flex-auto justify-between">
+          <button
+            className="m-2 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
+            onClick={insertMode}
+            display={`${gameOver}`}
+          >
+            ESC
+          </button>
+          <button
+            className="m-2 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
+            onClick={() => nextLesson()}
+            display={`${gameOver}`}
+            disabled={currentLevel === INSTRUCTIONS.length - 1}
+          >
+            Next Lesson
+          </button>
+          <button
+            className="m-2 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
+            onClick={() => prevLesson()}
+            display={`${gameOver}`}
+            disabled={currentLevel === 0}
+          >
+            Prev Lesson
+          </button>
+        </div>
         <AceEditor
           theme="gruvbox"
           minLines={25}
           ref={editor}
           value={VALUES[currentLevel][score]}
-          onChange={(e, v) => change(e, v)}
+          onChange={(e, v) => change(v)}
           focus={true}
           onLoad={(editor) => editor.gotoLine(0, 0)}
           width={size[0]}
