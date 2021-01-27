@@ -1,49 +1,17 @@
 import React, { useLayoutEffect, useState, useRef } from "react";
 import "./App.css";
 import Timer from "./components/Timer";
+import data from "./levels.json";
 import AceEditor from "react-ace";
 
 import "ace-builds/src-noconflict/theme-gruvbox";
 import "ace-builds/src-noconflict/keybinding-vim";
 
-const INSTRUCTIONS = [
-  ` A wild '%' is out of control! he keeps popping up everywhere on
-          this editor, remove him as fast as you can
-           Tip: there are several ways to navigate and delete a word with
-          vim. For this challenge, we recommend you stick to the basics. Use
-          'h' to move left, 'j' to move down, 'k' to move
-          up,'l' to move right
-          Once you've spotted the wild % put your cursor on it to aim your lazer
-          and shoot by pressing 'x'
-  `,
-  ` Time to get faster! 
-        You can type : followed by line number to take the cursor directly to the line you want to go to
-        You can also go to the end of each word by typing 'E' `,
-];
-
-const VALUES = [
-  [
-    `\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t%\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
-    `\n\n\n%\n\n\n\n\n\n\n\n\n\n\n`,
-    `\n%\n\n\n\n\n\n\n\n\n`,
-    `\t\t\t\t\t\t%\n\n\n\n\n\n\n\n\n`,
-    `\n\n\n\nprint("%")\n\n\n\n\n\n\n\n\n`,
-    `\n\n\n\n\t\t\t\t\t\t\t\t\tCongratulations!\n\n\n\n`,
-  ],
-  [
-    `\n\n\n\n\nprint("%")\n\n\n\n\n\n\n\n\n`,
-    `\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t%\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n`,
-    `\n%\n\n\n\n\n\n\n\n\n`,
-    `\n\n\n%\n\n\n\n\n\n\n\n\n\n\n`,
-    `\n\n\n\t\t\t\t\t\t\t\t\t%\n\n\n\n\n\n\n\n\n`,
-    `\n\n\n\nprint("%")\n\n\n\n\n\n\n\n\n`,
-  ],
-];
+const INSTRUCTIONS = data["instructions"];
+const VALUES = data["levels"];
 
 function App() {
   const [score, setScore] = useState(0);
-  const [startTimer, setTimer] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(30);
   const [gameOver, setGameOver] = useState(false);
   const [currentLevel, setCurrentLevel] = useState(0);
   const [size, setSize] = useState([0, 0]);
@@ -61,16 +29,18 @@ function App() {
   const reset = () => {
     setScore(0);
     setGameOver(false);
-    setTimeLeft(30);
     editor.current.editor.textInput.focus();
-    console.log(editor.current.editor.session);
   };
   const nextLesson = () => {
-    setTimer(false);
     setScore(0);
     setGameOver(false);
     setCurrentLevel(currentLevel + 1);
-    setTimeLeft(20);
+    editor.current.editor.textInput.focus();
+  };
+  const prevLesson = () => {
+    setScore(0);
+    setGameOver(false);
+    setCurrentLevel(currentLevel - 1);
     editor.current.editor.textInput.focus();
   };
   const change = (event, value) => {
@@ -78,12 +48,9 @@ function App() {
     if (value.action === "remove" && value.lines.includes("%")) {
       setScore(score + 1);
       if (score + 1 === 5) {
-        if (timeLeft <= 0) {
-          alert("Game Over! You didn't finish in time but you finished!");
-        } else {
-          alert("Congratulations! You killed the % in time!");
-        }
+        alert("Congratulations!");
         setGameOver(true);
+        nextLesson();
       }
     }
   };
@@ -96,8 +63,8 @@ function App() {
         <button onClick={() => nextLesson()} display={gameOver}>
           Next Lesson
         </button>
-        <button onClick={() => setTimer(true)} display={gameOver}>
-          Start Timer
+        <button onClick={() => prevLesson()} display={gameOver}>
+          Prev Lesson
         </button>
         <AceEditor
           theme="gruvbox"
