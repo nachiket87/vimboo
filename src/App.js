@@ -6,7 +6,7 @@ import levelHelpers from "./utilities/levelsHelper";
 import data from "./levels.json";
 import AceEditor from "react-ace";
 
-import "ace-builds/src-noconflict/theme-gruvbox";
+import "ace-builds/src-noconflict/theme-solarized_light";
 import "ace-builds/src-noconflict/keybinding-vim";
 
 const INSTRUCTIONS = data["instructions"];
@@ -22,7 +22,9 @@ function App() {
 
   useLayoutEffect(() => {
     const updateSize = () => {
-      setSize([window.innerWidth - 50, window.innerHeight - 50]);
+      let addMorePad = 0;
+      if (window.innerWidth > 800) addMorePad = 50;
+      setSize([window.innerWidth - addMorePad, window.innerHeight]);
     };
     window.addEventListener("resize", updateSize);
     updateSize();
@@ -32,19 +34,26 @@ function App() {
   const reset = () => {
     setScore(0);
     setGameOver(false);
-    setCurrentLevel(currentLevel);
     editor.current.editor.textInput.focus();
   };
   const nextLesson = () => {
-    setScore(0);
+    if (score < 5) {
+      setScore(score + 1);
+    } else {
+      setScore(0);
+      setCurrentLevel(currentLevel + 1);
+    }
     setGameOver(false);
-    setCurrentLevel(currentLevel + 1);
     editor.current.editor.textInput.focus();
   };
   const prevLesson = () => {
-    setScore(0);
+    if (score === 0) {
+      setCurrentLevel(currentLevel - 1);
+      setScore(4);
+    } else {
+      setScore(score - 1);
+    }
     setGameOver(false);
-    setCurrentLevel(currentLevel - 1);
     editor.current.editor.textInput.focus();
   };
   const change = (value) => {
@@ -58,8 +67,13 @@ function App() {
       setScore(score + 1);
       if (score + 1 === 5) {
         alert("Level Complete!");
+        if (currentLevel < 3) {
+          setScore(0);
+          setCurrentLevel(currentLevel + 1);
+        } else {
+          alert("Game over!");
+        }
         setGameOver(true);
-        if (currentLevel < 3) nextLesson(); // hard coded to prevent out of bounds of levels
       }
     }
   };
@@ -69,61 +83,83 @@ function App() {
   };
 
   return (
-    <div className="App p-3 m-3">
-      <div
-        className={`bg-gray-200 rounded-lg p-2 ${hideInstruct ? "hidden" : ""}`}
-      >
-        {INSTRUCTIONS[currentLevel]}
-      </div>
-      <button
-        className="m-2 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
-        display={`${gameOver}`}
-        onClick={() => setHideInstruct(!hideInstruct)}
-      >
-        {hideInstruct ? "Show" : "Hide"} Info
-      </button>
-      <div className="grid place-items-center">
-        <h3 className="font-black text-purple-700"> Problem Number: {score}</h3>
-        <Timer gameOver={gameOver} reset={reset} />
-        <div className="flex flex-auto justify-between">
-          <button
-            className="m-2 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
-            onClick={insertMode}
-            display={`${gameOver}`}
-          >
-            ESC
-          </button>
-          <button
-            className="m-2 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
-            onClick={() => nextLesson()}
-            display={`${gameOver}`}
-            disabled={currentLevel === INSTRUCTIONS.length - 1}
-          >
-            Next Lesson
-          </button>
-          <button
-            className="m-2 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
-            onClick={() => prevLesson()}
-            display={`${gameOver}`}
-            disabled={currentLevel === 0}
-          >
-            Prev Lesson
-          </button>
+    <>
+      <div className="App md:p-3 md:m-3 sm:p-0 sm:m-0">
+        <div
+          className={`bg-gray-200 rounded-lg p-2 ${
+            hideInstruct ? "hidden" : ""
+          }`}
+        >
+          {INSTRUCTIONS[currentLevel]}
+          <p>
+            <b>
+              {`Remember - You can always undo mistakes by pressing ESC followed by 'u'`}
+            </b>
+          </p>
         </div>
-        <AceEditor
-          theme="gruvbox"
-          minLines={25}
-          ref={editor}
-          value={VALUES[currentLevel][score]}
-          onChange={(e, v) => change(v)}
-          focus={true}
-          onLoad={(editor) => editor.gotoLine(0, 0)}
-          width={size[0]}
-          keyboardHandler="vim"
-          name="vimeditor"
-        />
+        <button
+          className="m-2 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
+          display={`${gameOver}`}
+          onClick={() => setHideInstruct(!hideInstruct)}
+        >
+          {hideInstruct ? "Show" : "Hide"} Info
+        </button>
+        <div className="grid">
+          <h3 className="font-black text-purple-700">
+            {" "}
+            Level: {currentLevel + 1}
+          </h3>
+          <h3 className="font-black text-purple-700">
+            {" "}
+            Problem Number: {score}
+          </h3>
+          <Timer gameOver={gameOver} reset={reset} editor={editor} />
+          <div className="flex flex-auto justify-between sm:p-0 sm:m-0">
+            <button
+              className="my-1 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
+              onClick={insertMode}
+              display={`${gameOver}`}
+            >
+              ESC
+            </button>
+            <div>
+              <button
+                className="m-1 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
+                onClick={() => nextLesson()}
+                display={`${gameOver}`}
+                disabled={
+                  currentLevel === INSTRUCTIONS.length - 1 && score === 5
+                }
+              >
+                Next
+              </button>
+              <button
+                className="m-1 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
+                onClick={() => prevLesson()}
+                display={`${gameOver}`}
+                disabled={currentLevel === 0 && score === 0}
+              >
+                Previous
+              </button>
+            </div>
+          </div>
+          <AceEditor
+            theme="solarized_light"
+            minLines={25}
+            ref={editor}
+            wrapEnabled={true}
+            value={VALUES[currentLevel][score]}
+            onChange={(e, v) => change(v)}
+            fontSize={16}
+            focus={true}
+            onLoad={(editor) => editor.gotoLine(0, 0)}
+            width={size[0]}
+            keyboardHandler="vim"
+            name="vimeditor"
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

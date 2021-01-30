@@ -1,25 +1,25 @@
 {
   "instructions":
-    ["A wild '%' is out of control!  he keeps popping up everywhere on this editor, remove him as fast as you can Tip: there are several ways to navigate and delete a word with vim. For this challenge, we recommend you stick to the basics. Use 'h' to move left, 'j' to move down, 'k' to move up,'l' to move right Once you've spotted the wild % put your cursor on it to aim your lazer and shoot by pressing 'x' Time to get faster You can type : followed by line number to take the cursor directly to the line you want to go to You can also go to the end of each word by typing 'E'",
-      "Time to get faster! You can type ':' followed by line number to take the cursor directly to the line you want to go to You can also go to the end of each word by typing 'e'",
-      "Let's play a Vim version of 'where's waldo!', find the word Waldo in the text below. But be careful, you cannot delete each character to win this challenge, you must delete this entire name.\n\n you can do this be bringing your cursor onto the first letter 'W' and pressing 5x or typing 'd' 'w'",
-      "Enough with the deleting. Let's do something that's common in programming. Replacing things within brackets or any surrounding tags for that matter! This challenge you will need to replace the print statements with 'Hello World'\n this can be done by simply placing the cursor on the first tag you'd like to replace text within and pressing 'c' + 'i' followed by \nthe text you'd like to insert"
+    ["The goal of this level to is to get delete the '%'.\n Let's start by practicing the basic movement commands in vim.\n Use 'h' to move left, 'j' to move down, 'k' to move up,'l' to move right and 'x' to delete the letter",
+      "Same task as before - Destroy the '%'! You can type ':' followed by line number to take the cursor directly to the line you want to go to. You can also go to the end of each word by typing 'e'",
+      "Let's play a Vim version of \"Where's Waldo!\", find the word Waldo in the text below. Be careful, you cannot delete each character to win this challenge, you must delete the entire name.\n\n you can do this be bringing your cursor onto the first letter 'W' and typgin 5x or typing 'dw'",
+      "Enough with the deleting. Let's do something that's common in programming. Replacing things within brackets or any surrounding tags for that matter! This challenge you will need to replace the print statements with 'Hello World'\n this can be done by simply placing the cursor on the first tag you'd like to replace text within and pressing 'c' + 'i' with your cursor above the tag within which you want to replace text. followed by \nthe text you'd like to insert."
     ],
     "levels": [
       [
-      "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t%\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
-      "\n\n\n%\n\n\n\n\n\n\n\n\n\n\n",
-      "\n%\n\n\n\n\n\n\n\n\n",
-      "\t\t\t\t\t\t%\n\n\n\n\n\n\n\n\n",
-      "\n\n\n\nprint(\"%\")\n\n\n\n\n\n\n\n\n",
-      "Wanna try a higher level? Click the 'Next Lesson' button above"
+      " ___            ___\r\n\/   \\          \/   \\\r\n\\_   \\        \/  __\/\r\n _\\   \\      \/  \/__\r\n \\___  \\____\/   __\/\r\n     \\_       _\/\r\n       | @ @  \\_\r\n       |\r\n     _\/     \/\\\r\n    \/o)  (o\/\\ \\_\r\n    \\_____\/ \/\r\n      \\____\/\n%",
+      "            ,\\\r\n             \\\\\\,_\r\n              \\` ,\\\r\n         __,.-\" =__)\r\n       .\"        )\r\n    ,_\/   ,    \\\/\\_\r\n    \\_|    )_-\\ \\_-`\r\n   `-----` `--`\n%\n\n\n\n\n\n\n\n\n\n\n",
+      "\n%\n\n\n\n\n\n\n\n\n       \/ \\      _-'\r\n     _\/|  \\-''- _ \/\r\n__-' { |          \\\r\n    \/             \\\r\n    \/       \"o.  |o }\r\n    |            \\ ;\r\n                  ',\r\n       \\_         __\\\r\n         ''-_    \\.\/\/\r\n           \/ '-____'\r\n          \/\r\n        _'\r\n      _-'",
+      "\t\t\t\t\t\t%\n\n\t\t             ___\r\n          .=\"   \"=._.---.\r\n        .\"         c ' Y'`p\r\n       \/   ,       `.  w_\/\r\n      |   '-.   \/     \/ \r\n _,..._|      )_-\\ \\_=.\\\r\n`-....-'`------)))`=-'\"`'\"\r\n",
+      "    .--.              .--.\r\n   : (\\ \". _......_ .\" \/) :\r\n    '.    `        `    .'\r\n     \/'   _        _   `\\\r\n    \/     0}      {0     \\\r\n   |       \/      \\       |\r\n   |     \/'        `\\     |\r\n    \\   | .  .==.  . |   \/\r\n     '._ \\.' \\__\/ '.\/ _.'\r\n     \/  ``'._-''-_.'``  \\\n\n\n\n(\"%\")\n\n\n\n\n\n\n\n\n",
+      "\t\tAwesome Job!\n\n             ___\r\n          .=\"   \"=._.---.\r\n        .\"         c ' Y'`p\r\n       \/   ,       `.  w_\/\r\n   |   '-.   \/     \/ \r\n _,..._|      )_-\\ \\_=.\\\r\n`-....-'`------)))`=-'\"`'\"\r\n"
       ],
       [
-      "\n\n\n\n\nprint(\"%\")\n\n\n\n\n\n\n\n\n",
-      "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t%\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+      "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t%\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+      "const funcCurry = (add) => {\n  return (a) => {\n    return (b) => {\n      return (c) => {\n        return add(a, b, c%)\n       }\n    }\n  }\n}",
       "\n%\n\n\n\n\n\n\n\n\n",
       "\n\n\n%\n\n\n\n\n\n\n\n\n\n\n",
-      "\n\n\n\t\t\t\t\t\t\t\t\t%\n\n\n\n\n\n\n\n\n",
+      "\n\n\nconst anAwesomeFunction = (%) => {\n  console.log(\"what up?\");\n}\n\n\n\n\n\n\n",
       "Wow! You're on a roll. Next ones pretty awesome! Hit the next level to get started!"
       ],
       [
@@ -36,7 +36,7 @@
         "list = [i for i in j if i % 2 = 0]\nj=[1,2,3,4,5,6,7]\nprint(\"\")",
         "#include<iostream>\n\nusing namespace std;\n\nint main() {\n  print(\"\")\n}",
         "#include<iostream>\n\nusing namespace std;\n\nint main() {\n  print(\"\")\n}",
-        "#include<iostream>\n\nusing namespace std;\n\nint main() {\n  print(\"\")\n}"
+        "\t\t\t\t\tCongratulations on Completing the Tutorial!\n\n                           oooo$$$$$$$$$$$$oooo\r\n                        oo$$$$$$$$$$$$$$$$$$$$$$$$o\r\n                     oo$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$o         o$   $$ o$\r\n     o $ oo        o$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$o       $$ $$ $$o$\r\n  oo $ $ \"$      o$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$o       $$$o$$o$\r\n  \"$$$$$$o$     o$$$$$$$$$      $$$$$$$$$$$      $$$$$$$$$$o    $$$$$$$$\r\n    $$$$$$$    $$$$$$$$$$$      $$$$$$$$$$$      $$$$$$$$$$$$$$$$$$$$$$$\r\n    $$$$$$$$$$$$$$$$$$$$$$$    $$$$$$$$$$$$$    $$$$$$$$$$$$$$  \"\"\"$$$\r\n     \"$$$\"\"\"\"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$     \"$$$\r\n      $$$   o$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$     \"$$$o\r\n     o$$\"   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$       $$$o\r\n     $$$    $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\" \"$$$$$$ooooo$$$$o\r\n    o$$$oooo$$$$$  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   o$$$$$$$$$$$$$$$$$\r\n    $$$$$$$$\"$$$$   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$     $$$$\"\"\"\"\"\"\"\"\r\n   \"\"\"\"       $$$$    \"$$$$$$$$$$$$$$$$$$$$$$$$$$$$\"      o$$$\r\n              \"$$$o     \"\"\"$$$$$$$$$$$$$$$$$$\"$$\"         $$$\r\n                $$$o          \"$$\"\"$$$$$$\"\"\"\"           o$$$\r\n                 $$$$o                                o$$$\"\r\n                  \"$$$$o      o$$$$$$o\"$$$$o        o$$$$\r\n                    \"$$$$$oo     \"\"$$$$o$$$$$o   o$$$$\"\"\r\n                       \"\"$$$$$oooo  \"$$$o$$$$$$$$$\"\"\"\r\n                          \"\"$$$$$$$oo $$$$$$$$$$\r\n                                  \"\"\"\"$$$$$$$$$$$\r\n                                      $$$$$$$$$$$$\r\n                                       $$$$$$$$$$\"\r\n                                        \"$$$\"\"\"\""
       ]
     ]
 }
