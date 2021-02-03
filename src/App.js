@@ -95,6 +95,7 @@ function App() {
               gameOver={gameOver}
               currentLevel={currentLevel}
               score={score}
+              editor={editor}
             />
             <Timer gameOver={gameOver} reset={reset} editor={editor} />
             <Cheatsheet />

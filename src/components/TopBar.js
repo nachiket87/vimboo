@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const TopBar = ({ instructions, gameOver, currentLevel, score }) => {
+const TopBar = ({ instructions, gameOver, currentLevel, score, editor }) => {
   const [hideInstruct, setHideInstruct] = useState(false);
 
   return (
@@ -19,7 +19,10 @@ const TopBar = ({ instructions, gameOver, currentLevel, score }) => {
       <button
         className="m-2 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
         display={`${gameOver}`}
-        onClick={() => setHideInstruct(!hideInstruct)}
+        onClick={() => {
+          setHideInstruct(!hideInstruct);
+          editor.current.editor.textInput.focus();
+        }}
       >
         {hideInstruct ? "Show" : "Hide"} Info
       </button>
@@ -39,6 +42,7 @@ TopBar.propTypes = {
   gameOver: PropTypes.bool,
   currentLevel: PropTypes.number,
   score: PropTypes.number,
+  editor: PropTypes.object,
 };
 
 export default TopBar;
