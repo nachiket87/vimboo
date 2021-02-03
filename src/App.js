@@ -98,7 +98,7 @@ function App() {
               editor={editor}
             />
             <Timer gameOver={gameOver} reset={reset} editor={editor} />
-            <Cheatsheet />
+            <Cheatsheet editor={editor} />
           </div>
           <div>
             <button

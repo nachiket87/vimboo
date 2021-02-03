@@ -15,7 +15,6 @@ const level4 = ({ editor, score }) => {
     { end: { row: 5, column: 20 }, start: { row: 5, column: 9 } },
   ];
   const content = editor.current.editor.session.getTextRange(answers[score]);
-  console.log(content);
   return content === "Hello World";
 };
 

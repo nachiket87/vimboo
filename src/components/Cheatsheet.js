@@ -1,6 +1,7 @@
+/* eslint-disable */
 import React, { useEffect } from "react";
 
-const Cheatsheet = () => {
+const Cheatsheet = (props) => {
   useEffect(() => {
     window.addEventListener("keyup", (k) => {
       const x = document.getElementById(k.key);
@@ -10,6 +11,9 @@ const Cheatsheet = () => {
         x.classList.remove("opacity-25");
       }, 300);
     });
+    window.addEventListener("click", () => {
+      props.editor.current.editor.textInput.focus();
+    });
   }, []);
   return (
     <div className="grid place-items-center">
@@ -18,6 +22,7 @@ const Cheatsheet = () => {
         <button
           className="m-2 w-16 h-16 bg-gray-500 my-1 rounded-lg text-center text-sm text-white"
           id="k"
+          disabled={true}
         >
           <p>{`^`}</p>k
         </button>
