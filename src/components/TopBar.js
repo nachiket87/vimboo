@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const TopBar = ({ gameOver, currentLevel, score }) => {
+const TopBar = ({ instructions, gameOver, currentLevel, score }) => {
   const [hideInstruct, setHideInstruct] = useState(false);
 
   return (
@@ -9,7 +9,7 @@ const TopBar = ({ gameOver, currentLevel, score }) => {
       <div
         className={`bg-gray-200 rounded-lg p-2 ${hideInstruct ? "hidden" : ""}`}
       >
-        {"Temp instructions"}
+        {instructions}
         <p>
           <b>
             {`Remember - You can always undo mistakes by pressing ESC followed by 'u'`}
@@ -35,6 +35,7 @@ const TopBar = ({ gameOver, currentLevel, score }) => {
 };
 
 TopBar.propTypes = {
+  instructions: PropTypes.string,
   gameOver: PropTypes.bool,
   currentLevel: PropTypes.number,
   score: PropTypes.number,

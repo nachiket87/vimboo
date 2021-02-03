@@ -3,6 +3,7 @@ import "./App.css";
 import switchMode from "./utilities/switchModes";
 import Timer from "./components/Timer";
 import TopBar from "./components/TopBar";
+import Cheatsheet from "./components/Cheatsheet";
 import levelHelpers from "./utilities/levelsHelper";
 import data from "./levels.json";
 import AceEditor from "react-ace";
@@ -90,11 +91,13 @@ function App() {
         <div className="grid grid-cols-1 md:grid-cols-2 mt-2">
           <div>
             <TopBar
+              instructions={INSTRUCTIONS[currentLevel]}
               gameOver={gameOver}
               currentLevel={currentLevel}
               score={score}
             />
             <Timer gameOver={gameOver} reset={reset} editor={editor} />
+            <Cheatsheet />
           </div>
           <div>
             <button
