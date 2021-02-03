@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useState, useRef } from "react";
 import "./App.css";
 import switchMode from "./utilities/switchModes";
 import Timer from "./components/Timer";
+import TopBar from "./components/TopBar";
 import levelHelpers from "./utilities/levelsHelper";
 import data from "./levels.json";
 import AceEditor from "react-ace";
@@ -15,16 +16,17 @@ const VALUES = data["levels"];
 function App() {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
-  const [hideInstruct, setHideInstruct] = useState(false);
   const [currentLevel, setCurrentLevel] = useState(0);
   const [size, setSize] = useState([0, 0]);
   const editor = useRef(null);
 
   useLayoutEffect(() => {
     const updateSize = () => {
-      let addMorePad = 0;
-      if (window.innerWidth > 800) addMorePad = 50;
-      setSize([window.innerWidth - addMorePad, window.innerHeight]);
+      if (window.innerWidth > 800) {
+        setSize("50vw");
+      } else {
+        setSize("100vw");
+      }
     };
     window.addEventListener("resize", updateSize);
     updateSize();
@@ -72,8 +74,8 @@ function App() {
           setCurrentLevel(currentLevel + 1);
         } else {
           alert("Game over!");
+          setGameOver(true);
         }
-        setGameOver(true);
       }
     }
   };
@@ -84,37 +86,17 @@ function App() {
 
   return (
     <>
-      <div className="App md:p-3 md:m-3 sm:p-0 sm:m-0">
-        <div
-          className={`bg-gray-200 rounded-lg p-2 ${
-            hideInstruct ? "hidden" : ""
-          }`}
-        >
-          {INSTRUCTIONS[currentLevel]}
-          <p>
-            <b>
-              {`Remember - You can always undo mistakes by pressing ESC followed by 'u'`}
-            </b>
-          </p>
-        </div>
-        <button
-          className="m-2 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
-          display={`${gameOver}`}
-          onClick={() => setHideInstruct(!hideInstruct)}
-        >
-          {hideInstruct ? "Show" : "Hide"} Info
-        </button>
-        <div className="grid">
-          <h3 className="font-black text-purple-700">
-            {" "}
-            Level: {currentLevel + 1}
-          </h3>
-          <h3 className="font-black text-purple-700">
-            {" "}
-            Problem Number: {score}
-          </h3>
-          <Timer gameOver={gameOver} reset={reset} editor={editor} />
-          <div className="flex flex-auto justify-between sm:p-0 sm:m-0">
+      <div className="grid mt-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 mt-2">
+          <div>
+            <TopBar
+              gameOver={gameOver}
+              currentLevel={currentLevel}
+              score={score}
+            />
+            <Timer gameOver={gameOver} reset={reset} editor={editor} />
+          </div>
+          <div>
             <button
               className="my-1 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
               onClick={insertMode}
@@ -122,41 +104,37 @@ function App() {
             >
               ESC
             </button>
-            <div>
-              <button
-                className="m-1 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
-                onClick={() => nextLesson()}
-                display={`${gameOver}`}
-                disabled={
-                  currentLevel === INSTRUCTIONS.length - 1 && score === 5
-                }
-              >
-                Next
-              </button>
-              <button
-                className="m-1 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
-                onClick={() => prevLesson()}
-                display={`${gameOver}`}
-                disabled={currentLevel === 0 && score === 0}
-              >
-                Previous
-              </button>
-            </div>
+            <button
+              className="m-1 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
+              onClick={() => nextLesson()}
+              display={`${gameOver}`}
+              disabled={currentLevel === INSTRUCTIONS.length - 1 && score === 5}
+            >
+              Next
+            </button>
+            <button
+              className="m-1 p-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
+              onClick={() => prevLesson()}
+              display={`${gameOver}`}
+              disabled={currentLevel === 0 && score === 0}
+            >
+              Previous
+            </button>
+            <AceEditor
+              theme="solarized_light"
+              minLines={25}
+              ref={editor}
+              wrapEnabled={true}
+              value={VALUES[currentLevel][score]}
+              onChange={(e, v) => change(v)}
+              fontSize={16}
+              focus={true}
+              onLoad={(editor) => editor.gotoLine(0, 0)}
+              keyboardHandler="vim"
+              name="vimeditor"
+              style={{ width: size }}
+            />
           </div>
-          <AceEditor
-            theme="solarized_light"
-            minLines={25}
-            ref={editor}
-            wrapEnabled={true}
-            value={VALUES[currentLevel][score]}
-            onChange={(e, v) => change(v)}
-            fontSize={16}
-            focus={true}
-            onLoad={(editor) => editor.gotoLine(0, 0)}
-            width={size[0]}
-            keyboardHandler="vim"
-            name="vimeditor"
-          />
         </div>
       </div>
     </>
